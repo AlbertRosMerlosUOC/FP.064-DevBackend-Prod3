@@ -6,7 +6,7 @@
 </head>
 <body>  
     <div class="container px-3 py-5">
-        <h1 class="pb-2 border-bottom" style="text-align: left;">Editando el perfil del usuario: <b><?= $user->User; ?></b></h1>
+        <h1 class="pb-2 border-bottom" style="text-align: left;">Editando el perfil del usuario: <b>{{ $user->User }}</b></h1>
         <div class="container" style="justify-content: center; align-items: center; width: 600px;">
             <div class="tab-content clearfix formulario-datos-completo" style="width: 576px;" id="PerfilContent">   
                 <form action="/profile" method="POST" style="width: 400px;">
@@ -14,19 +14,19 @@
                     <div class="form-profile">
                         <input type="hidden" name="Id_persona" value="">
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="Nombre" id="floatingNombre" placeholder="Nombre" value="<?= $user->User; ?>" required>
+                            <input type="text" class="form-control" name="Nombre" id="floatingNombre" placeholder="Nombre" value="{{ $user->Nombre }}" required>
                             <label for="floatingUser">Nombre</label>
                         </div>
                         <div class="mt-3 form-floating">
-                            <input type="text" class="form-control" name="Apellido1" id="floatingApellido1" placeholder="Primer apellido" value="<?= $user->Apellido1; ?>" required>
+                            <input type="text" class="form-control" name="Apellido1" id="floatingApellido1" placeholder="Primer apellido" value="{{ $user->Apellido1 }}" required>
                             <label for="floatingApellido1">Primer apellido</label>
                         </div>
                         <div class="mt-3 form-floating">
-                            <input type="text" class="form-control" name="Apellido2" id="floatingApellido2" placeholder="Segundo apellido" value="<?= $user->Apellido2; ?>" required>
+                            <input type="text" class="form-control" name="Apellido2" id="floatingApellido2" placeholder="Segundo apellido" value="{{ $user->Apellido2 }}" required>
                             <label for="floatingApellido2">Segundo apellido</label>
                         </div>
                         <div class="mt-3 form-floating">
-                            <input type="email" class="form-control" name="Email" id="floatingEmail" placeholder="E-mail" value="<?= $user->email; ?>">
+                            <input type="email" class="form-control" name="Email" id="floatingEmail" placeholder="E-mail" value="{{ $user->email }}">
                             <label for="floatingUser">E-mail</label>
                         </div>
                         <div class="mt-3 form-floating">
