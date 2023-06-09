@@ -7,7 +7,7 @@ use App\Models\User;
 <html lang="es">
     <head>
         <title>Gestor de eventos DevBackend</title>
-        <link rel="stylesheet" href="/assets/css/login.css">
+        <link rel="stylesheet" href="/public/assets/css/style.css">
     </head>
     <body>
         <main class="form-signin" style="max-width: 450px !important;">

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <title>Gestor de eventos DevBackend - Registro</title>
-    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/public/assets/css/login.css">
 </head>
 <body>
     <main class="form-signup">

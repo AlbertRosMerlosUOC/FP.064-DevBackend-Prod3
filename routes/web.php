@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\TipoUController;
+use App\Http\Controllers\ProfileController;
 use App\Models\TipoUsuario;
 
 
@@ -67,4 +68,9 @@ Route::post('/signup', [SignupController::class, 'register'])->name('register');
 Route::get('/signup', function () {
     return view('signup');
 })->name('signup');    
+
+// Ruta del perfil
+Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::get('/editprofile', 'ProfileController@edit')->name('editprofile');
+
 
