@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\TipoUController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EditProfileController;
 use App\Models\TipoUsuario;
 
 
@@ -77,6 +78,8 @@ Route::get('/editprofile', function () {
     $user = Auth::user();
     return view('editprofile', compact('user'));
 })->name('editprofile');
+
+Route::post('/profile', [EditProfileController::class, 'update'])->name('profile.update');
 
 
 
