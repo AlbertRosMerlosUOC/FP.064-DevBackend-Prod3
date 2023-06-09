@@ -71,6 +71,8 @@ Route::get('/signup', function () {
 
 // Ruta del perfil
 Route::get('/profile', 'ProfileController@index')->name('profile');
-Route::get('/editprofile', 'ProfileController@edit')->name('editprofile');
+
+// Ruta de la edición del perfil
+
 
 
