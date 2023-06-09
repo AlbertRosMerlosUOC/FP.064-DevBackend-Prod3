@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 class EditProfileController extends Controller
 {
@@ -32,18 +33,15 @@ class EditProfileController extends Controller
         // Actualizar los datos del usuario
         $user->name = $request->name;
         $user->email = $request->email;
-        if ($request->password) {
+        if ($request->has('password') && $request->password != '') {
             $user->password = bcrypt($request->password);
         }
         $user->save();
 
         // Redireccionar a la página de perfil con un mensaje de éxito
-        return redirect()->route('profile')->with('success', 'Perfil actualizado correctamente.');
+        return Redirect::route('profile')->with('success', 'Perfil actualizado correctamente.');
     }
 }
-
-
-
 
 
 
