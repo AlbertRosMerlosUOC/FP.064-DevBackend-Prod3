@@ -21,17 +21,20 @@ class EditProfileController extends Controller
     public function update(Request $request)
     {
         // Validar los datos del formulario
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'nullable|confirmed',
+        $validatedData = $request->validate([
+            'User' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
+            'Nombre' => 'required',
+            'Apellido1' => 'required',
+            'Apellido2' => 'required',
+            'password' => 'required',
         ]);
 
         // Obtener el usuario autenticado
         $user = Auth::user();
 
         // Actualizar los datos del usuario
-        $user->name = $request->name;
+        $user->Nombre = $request->Nombre;
         $user->email = $request->email;
         if ($request->has('password') && $request->password != '') {
             $user->password = bcrypt($request->password);
