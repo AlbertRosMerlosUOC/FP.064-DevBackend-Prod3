@@ -18,10 +18,18 @@ RUN sed -i -e 's/html/html\/public/g' /etc/apache2/sites-available/default-ssl.c
 # Habilitar el módulo de reescritura de Apache
 RUN a2enmod rewrite
 
+COPY . /var/www/html
+
 # Configurar las variables de entorno de Apache
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
 # Reiniciar Apache
 RUN service apache2 restart
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN composer install
+
 WORKDIR /var/www/html
+
+CMD php artisan serve --host=0.0.0.0 --port=8000
