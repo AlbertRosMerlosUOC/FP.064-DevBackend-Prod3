@@ -19,6 +19,8 @@ services:
       MYSQL_DATABASE: laravel
     volumes:
       - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

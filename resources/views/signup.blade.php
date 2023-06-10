@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <title>Gestor de eventos DevBackend - Registro</title>
-    <link rel="stylesheet" href="/public/assets/css/login.css">
+    @include('partials.includes')
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body>
     <main class="form-signup">
@@ -13,8 +14,8 @@
                 <input type="text" class="form-control" name="User" id="floatingUser" placeholder="Usuario" class="input-ini" required>
                 <label for="floatingUser">Usuario</label>
             </div>
-            <div class="form-floating">
-                <input type="text" class="form-control" name="email" id="floatingEmail" placeholder="Email" class="input-ini" required>
+            <div class="mt-3 form-floating">
+                <input type="text" class="form-control" name="email" id="floatingEmail" placeholder="Email" required>
                 <label for="floatingEmail">Email</label>
             </div>
             <div class="mt-3 form-floating">

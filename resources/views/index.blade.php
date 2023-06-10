@@ -1,13 +1,13 @@
-
 <?php
-use App\Models\User;
+    use App\Models\User;
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <title>Gestor de eventos DevBackend</title>
-        <link rel="stylesheet" href="/public/assets/css/style.css">
+        @include('partials.includes')
+        <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     </head>
     <body>
         <main class="form-signin" style="max-width: 450px !important;">
