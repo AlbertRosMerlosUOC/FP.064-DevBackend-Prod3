@@ -33,6 +33,7 @@ Route::get('/principal', function () {
         $userId = Auth::id();
         $user = User::find($userId);
         $idTipoUsuario = $user->Id_tipo_usuario;
+        $nombreUsuario = $user->Nombre;
     }    
     if ($idTipoUsuario) {
         $tipoUsuario = TipoUsuario::find($idTipoUsuario);
@@ -40,7 +41,7 @@ Route::get('/principal', function () {
     } else {
         $descripcionTipoUsuario = null;
     }
-    return view('principal', compact('idTipoUsuario', 'descripcionTipoUsuario'));
+    return view('principal', compact('idTipoUsuario', 'descripcionTipoUsuario', 'nombreUsuario'));
 })->name('principal');
 
 
@@ -76,7 +77,9 @@ Route::get('/profile', 'ProfileController@index')->name('profile');
 // Ruta de la edición del perfil
 Route::get('/editprofile', function () {
     $user = Auth::user();
-    return view('editprofile', compact('user'));
+    $idTipoUsuario = $user->Id_tipo_usuario;
+    $nombreUsuario = $user->Nombre;
+    return view('editprofile', compact('user', 'idTipoUsuario', 'nombreUsuario'));
 })->name('editprofile');
 
 Route::post('/profile', [EditProfileController::class, 'update'])->name('profile.update');

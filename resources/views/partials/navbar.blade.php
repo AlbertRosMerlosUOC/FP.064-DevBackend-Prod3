@@ -20,7 +20,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="">Actos</a></li>
+                                <li><a class="dropdown-item" href="actos">Actos</a></li>
                                 <li><a class="dropdown-item" href="">Usuarios</a></li>
                                 <li><a class="dropdown-item" href="">Tipos de actos</a></li>
                             </ul>

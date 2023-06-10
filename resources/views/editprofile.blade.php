@@ -2,9 +2,12 @@
 <html lang="es">
 <head>
     <title>Gestor de eventos DevBackend - Perfil</title>
-    <link rel="stylesheet" href="/public/assets/css/login.css">
+    @include('partials.includes')
+    <!-- <link rel="stylesheet" href="{{ asset('css/login.css') }}"> -->
 </head>
-<body>  
+<body>
+    @include('partials.header')
+    @include('partials.svg')  
     <div class="container px-3 py-5">
         <h1 class="pb-2 border-bottom" style="text-align: left;">Editando el perfil del usuario: <b>{{ $user->User }}</b></h1>
         <div class="container" style="justify-content: center; align-items: center; width: 600px;">
