@@ -12,6 +12,11 @@ use App\Models\User;
     @include('partials.includes')
 </head>
 <body>
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
     @include('partials.header')
     @include('partials.svg')
     <div class="container px-3 py-5" id="icon-grid">

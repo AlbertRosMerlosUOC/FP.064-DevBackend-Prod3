@@ -66,6 +66,13 @@ Route::get('/login', function () {
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+// Ruta del logout
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
+
+
 // Rutas del signup
 Route::post('/signup', [SignupController::class, 'register'])->name('register');
 
@@ -77,18 +84,29 @@ Route::get('/signup', function () {
 // Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
-
 // Ruta de la edición del perfil
 Route::get('/editprofile', function () {
     $user = Auth::user();
+    $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
     $nombreUsuario = $user->Nombre;
-    return view('editprofile', compact('user', 'idTipoUsuario', 'nombreUsuario'));
+    
+
+    return view('editprofile', compact('user', 'id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('editprofile');
 
 Route::post('/profile', [EditProfileController::class, 'update'])->name('profile.update');
 
-Route::get('/actos', 'ActoController@index');
+
+Route::get('/actos', function () {
+    $user = Auth::user();
+    $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
+    $idTipoUsuario = $user->Id_tipo_usuario;
+    $nombreUsuario = $user->Nombre;
+    $actos = Acto::all();
+    return view('actos', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
+})->name('actos');
+
 
 
 

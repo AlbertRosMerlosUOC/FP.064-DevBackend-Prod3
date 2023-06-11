@@ -12,10 +12,10 @@
         <h1 class="pb-2 border-bottom" style="text-align: left;">Editando el perfil del usuario: <b>{{ $user->User }}</b></h1>
         <div class="container" style="justify-content: center; align-items: center; width: 600px;">
             <div class="tab-content clearfix formulario-datos-completo" style="width: 576px;" id="PerfilContent">   
-                <form action="/profile" method="POST" style="width: 400px;">
+            <form action="{{ route('profile') }}" method="POST" style="width: 400px;">
                     @csrf
                     <div class="form-profile">
-                        <input type="hidden" name="Id_persona" value="">
+                    <input type="hidden" name="Id_persona" value="{{ $id_persona }}">
                         <div class="form-floating">
                             <input type="text" class="form-control" name="Nombre" id="floatingNombre" placeholder="Nombre" value="{{ $user->Nombre }}" required>
                             <label for="floatingUser">Nombre</label>
@@ -52,12 +52,10 @@
                             @endif
                         </div>
                     </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary" name="update">Actualizar datos</button>
+                    <button type="submit" class="btn btn-primary" name="update" value="update">Actualizar datos</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

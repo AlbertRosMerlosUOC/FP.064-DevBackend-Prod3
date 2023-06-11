@@ -108,4 +108,11 @@ return [
 
     'password_timeout' => 10800,
 
+
+    'logout' => [
+        'method' => 'post',
+        'uri' => 'logout',
+        'controller' => 'App\Http\Controllers\Auth\LoginController@logout',
+    ],    
+
 ];

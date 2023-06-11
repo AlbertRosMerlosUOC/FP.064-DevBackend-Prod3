@@ -35,7 +35,7 @@
                 <ul class="dropdown-menu text-small">
                     <li class="d-flex align-items-center"><i class="fa fa-user fa-1" style="margin-left: 10px;"></i>&nbsp;<a class="dropdown-item" href="editprofile" style="padding-left: 5px !important;">Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li class="d-flex align-items-center"><i class="fa fa-sign-out fa-1" style="margin-left: 10px;"></i>&nbsp;<a class="dropdown-item" href="/php/logout.php" style="padding-left: 5px !important;">Cerrar sesión</a></li>
+                    <li class="d-flex align-items-center"><i class="fa fa-sign-out fa-1" style="margin-left: 10px;"></i>&nbsp;<form action="{{ route('logout') }}" method="POST"><button type = "submit" class="dropdown-item" style="padding-left: 5px !important;">Cerrar sesión</button></form></li>
                 </ul>
             </div>
         </div>

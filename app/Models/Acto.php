@@ -8,7 +8,7 @@
 
         protected $table = 'actos';
         protected $primaryKey = 'Id_acto';
-        public $timestamps = true;
+        public $timestamps = false;
 
         protected $fillable = [
             'Fecha',

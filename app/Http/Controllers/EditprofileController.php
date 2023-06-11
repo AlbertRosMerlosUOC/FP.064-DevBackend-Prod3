@@ -1,49 +1,46 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-    use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Auth;
-    use App\Models\User;
-    use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-    class EditProfileController extends Controller
-    {
-        public function edit()
-        {
-            // Obtener el usuario autenticado
-            $user = Auth::user();
+class EditProfileController extends Controller
+{
+    public function update(Request $request)
+{
+    // Obtener el usuario autenticado
+    $user = Auth::user();
 
-            // Pasar los datos del usuario a la vista de edición
-            return view('editprofile', compact('user'));
-        }
+    // Validar los datos del formulario
+    $validatedData = $request->validate([
+        'Nombre' => 'required',
+        'Apellido1' => 'required',
+        'Apellido2' => 'required',
+        'Email' => 'required|email',
+        'Password' => 'required',
+    ]);
 
-        public function update(Request $request)
-        {
-            // Validar los datos del formulario
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'password' => 'nullable|confirmed',
-            ]);
+    $id_persona = $user->Id_persona;
 
-            // Obtener el usuario autenticado
-            $user = Auth::user();
+    // Actualizar los datos del usuario
+    $user->Nombre = $request->input('Nombre');
+    $user->Apellido1 = $request->input('Apellido1');
+    $user->Apellido2 = $request->input('Apellido2');
+    $user->email = $request->input('Email');
+    $user->password = $request->input('Password');
+    //$user->password = Hash::make($request->input('Password'));
+    // ...
 
-            // Actualizar los datos del usuario
-            $user->name = $request->name;
-            $user->email = $request->email;
-            if ($request->has('password') && $request->password != '') {
-                $user->password = bcrypt($request->password);
-            }
-            $user->save();
+    // Guardar los cambios en la base de datos
+    $user->save();
 
-            // Redireccionar a la página de perfil con un mensaje de éxito
-            return Redirect::route('profile')->with('success', 'Perfil actualizado correctamente.');
-        }
-    }
-    
+    // Redireccionar a la página de perfil con un mensaje de éxito
+    return redirect()->route('principal')->with('success', 'Perfil actualizado correctamente.');
+}
 
+
+}
 
 
 
