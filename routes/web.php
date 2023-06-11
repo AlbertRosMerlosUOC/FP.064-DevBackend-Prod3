@@ -1,14 +1,15 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\TipoUController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EditProfileController;
+use App\Http\Controllers\ActoController;
+use App\Models\User;
+use App\Models\Acto;
 use App\Models\TipoUsuario;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ use App\Models\TipoUsuario;
 // Ruta de la página principal
 Route::get('/principal', function () {
     $usidTipoUsuarioer = null;
+    $idTipoUsuario = null;
     if (Auth::check()) {
         $userId = Auth::id();
         $user = User::find($userId);
@@ -72,7 +74,9 @@ Route::get('/signup', function () {
 })->name('signup');    
 
 // Ruta del perfil
-Route::get('/profile', 'ProfileController@index')->name('profile');
+// Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+
 
 // Ruta de la edición del perfil
 Route::get('/editprofile', function () {
@@ -83,6 +87,9 @@ Route::get('/editprofile', function () {
 })->name('editprofile');
 
 Route::post('/profile', [EditProfileController::class, 'update'])->name('profile.update');
+
+Route::get('/actos', 'ActoController@index');
+
 
 
 

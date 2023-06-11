@@ -1,11 +1,7 @@
-<?php
-    session_start();
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Acto.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/ActoCo.php';
-
-    $acto = new ActoCo($conn);
-    $actos = $acto->getAll();
-?>
+@php
+    use App\Models\Acto;
+    use App\Http\Controllers\ActoController;
+@endphp
 
 <div class="px-3 py-5" style="width: 100%; display: flex; justify-content: center; align-items: center;">
     <table class="table" style="width: 70%;">
@@ -34,30 +30,28 @@
                     <div class="div-listado" style="width: 100%;">
                         <table class="table table-hover" style="width: 100%;">
                             <tbody>
-                                <?php
-                                    if (count($actos) > 0) {
-                                        foreach ($actos as $reg) {
-                                            echo "<tr style=\"padding: 0px; margin: 0px;\">
-                                                    <td width=\"60px\">". $reg["Id_acto"] . "</th>
-                                                    <td width=\"110px\">". date('d/m/Y', strtotime($reg['Fecha'])) . "</td>
-                                                    <td width=\"80px\">". $reg['Hora'] . "</td>
-                                                    <td width=\"190px\" align='left'>". $reg['Tipo_acto'] . "</td>
-                                                    <td width=\"200px\" align='left'>". $reg['Titulo'] . "</td>
-                                                    <td width=\"320px\" align='left'>". $reg['Descripcion_corta'] . "</td>
-                                                    <td width=\"110px\">". $reg['Num_asistentes'] . "</td>
-                                                    <td width=\"110px\">". $reg['Num_inscritos'] . "</td>
-                                                    <td width=\"*\">
-                                                        <button class=\"btn btn-primary\" onclick='editarActo(" . $reg["Id_acto"] . ")'><i class=\"fa fa-edit fa-lg\"></i></button>
-                                                        <button class=\"btn btn-danger\" onclick='eliminarActo(" . $reg["Id_acto"] . ")'><i class=\"fa fa-trash-o fa-lg\"></i></button>
-                                                    </td>
-                                                </tr>";
-                                        }
-                                    } else {
-                                        echo "<tr>
-                                                <td colspan='9'>No existen actos creados</td>
-                                            </tr>";
-                                    }
-                                ?>
+                                @if (count($actos) > 0)
+                                    @foreach ($actos as $reg)
+                                        <tr style="padding: 0px; margin: 0px;">
+                                            <td width="60px">{{ $reg["Id_acto"] }}</td>
+                                            <td width="110px">{{ date('d/m/Y', strtotime($reg['Fecha'])) }}</td>
+                                            <td width="80px">{{ $reg['Hora'] }}</td>
+                                            <td width="190px" align="left">{{ $reg['Tipo_acto'] }}</td>
+                                            <td width="200px" align="left">{{ $reg['Titulo'] }}</td>
+                                            <td width="320px" align="left">{{ $reg['Descripcion_corta'] }}</td>
+                                            <td width="110px">{{ $reg['Num_asistentes'] }}</td>
+                                            <td width="110px">{{ $reg['Num_inscritos'] }}</td>
+                                            <td width="*">
+                                                <button class="btn btn-primary" onclick="editarActo({{ $reg["Id_acto"] }})"><i class="fa fa-edit fa-lg"></i></button>
+                                                <button class="btn btn-danger" onclick="eliminarActo({{ $reg["Id_acto"] }})"><i class="fa fa-trash-o fa-lg"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="9">No existen actos creados</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -105,8 +99,8 @@
     }
 </script>
 
-<?php
-    $estadoAccion = $_SESSION['estadoAccion'] ?? null;
+@php
+    $estadoAccion = session('estadoAccion');
     if ($estadoAccion) {
         $class = '';
         $mensaje = '';
@@ -136,6 +130,6 @@
                     bsToast.hide();
                 }, 5000);
                 </script>';
-        unset($_SESSION['estadoAccion']);
+        session()->forget('estadoAccion');
     }
-?>
+@endphp

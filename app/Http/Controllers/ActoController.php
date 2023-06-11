@@ -7,10 +7,15 @@
     use App\Models\Acto;
 
     class ActoController extends Controller {
+        public function index() {
+            $actos = Acto::all();
+            return view('actos', compact('actos'));
+        }
         public function getAll()
         {
             $actos = Acto::all();
-            return view('actos.index', compact('actos'));
+            // return view('actos', compact('actos'));
+            return (compact('actos'));
         }
 
         public function getById($id)
@@ -67,4 +72,3 @@
 
     }
     
-?>

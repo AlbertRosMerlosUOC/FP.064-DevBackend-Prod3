@@ -14,4 +14,3 @@
         protected $fillable = ['Descripcion'];
     }
     
-?>

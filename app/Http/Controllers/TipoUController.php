@@ -11,5 +11,3 @@
             return response()->json(['descripcion' => $descripcion]);
         }
     }
-
-?>

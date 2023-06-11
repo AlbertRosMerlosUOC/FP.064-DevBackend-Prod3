@@ -13,4 +13,3 @@
         use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     }
     
-?>
