@@ -1,26 +1,16 @@
-<?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Acto.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/models/TipoActo.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/ActoCo.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/TipoActoCo.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/PersonaCo.php';
-    $actoCo = new ActoCo($conn);
-    $personaCo = new PersonaCo($conn);
-    $tipoActoCo = new TipoActoCo($conn);
-    $tiposActos = $tipoActoCo->getAll();
-?>
 <div class="tab-pane show active" id="datos" role="tabpanel" aria-labelledby="datos-tab">
-    <form action="/php/actosFormAccion.php" method="POST" style="width: 450px;">
+    <form action="{{ url('/php/actosFormAccion.php') }}" method="POST" style="width: 450px;">
+        @csrf
         <input type="hidden" id="Id_acto" name="Id_acto"/>
         <div class="form-group">
             <div class="row">
                 <div class="col">
-                <label class="form-label" for="Fecha">Fecha&nbsp;<span class="required" title="Campo requerido">*</span></label>
-                <input class="form-control" type="date" placeholder="Fecha" id="Fecha" name="Fecha" required/>
+                    <label class="form-label" for="Fecha">Fecha&nbsp;<span class="required" title="Campo requerido">*</span></label>
+                    <input class="form-control" type="date" placeholder="Fecha" id="Fecha" name="Fecha" required/>
                 </div>
                 <div class="col">
-                <label class="form-label" for="Hora">Hora&nbsp;<span class="required" title="Campo requerido">*</span></label>
-                <input class="form-control" type="time" placeholder="Hora" id="Hora" name="Hora" required/>
+                    <label class="form-label" for="Hora">Hora&nbsp;<span class="required" title="Campo requerido">*</span></label>
+                    <input class="form-control" type="time" placeholder="Hora" id="Hora" name="Hora" required/>
                 </div>
             </div>
         </div>
@@ -46,23 +36,21 @@
                     <label class="form-label" for="Id_tipo_acto">Tipo de acto&nbsp;<span class="required" title="Campo requerido">*</span></label>
                     <select class="form-control" id="Id_tipo_acto" name="Id_tipo_acto" required>
                         <option value=""></option>
-                        <?php
-                            foreach ($tiposActos as $reg) {
-                                echo '<option value="' . $reg['Id_tipo_acto'] . '">' . $reg['Descripcion'] . '</option>';
-                            }
-                        ?>
+                        @foreach ($tiposActos as $reg)
+                            <option value="{{ $reg['Id_tipo_acto'] }}">{{ $reg['Descripcion'] }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
         </div>
         <br>
-        <button type="submit" class="btn btn-primary" name="<?php echo $action; ?>"><?php echo $actionText; ?></button>
+        <button type="submit" class="btn btn-primary" name="{{ $action }}">{{ $actionText }}</button>
         <button type="button" class="btn btn-danger" onclick="volver()">Volver</button>
     </form>
 </div>
 
-<?php
-    $estadoAccion = $_SESSION['estadoAccion'] ?? null;
+@php
+    $estadoAccion = session('estadoAccion');
     if ($estadoAccion) {
         $class = '';
         $mensaje = '';
@@ -92,13 +80,13 @@
                     bsToast.hide();
                 }, 5000);
                 </script>';
-        unset($_SESSION['estadoAccion']);
+        session()->forget('estadoAccion');
     }
-?>
+@endphp
+
 
 <script>
     function volver() {
-        var url = "/views/actos.php";
-        window.location.href = url;
+        window.location.href = "actos";
     }
 </script>

@@ -23,6 +23,7 @@ use App\Models\User;
         <h1 class="pb-2 border-bottom" style="text-align: left;">Menú principal de <b>{{$descripcionTipoUsuario}}</b></h1>
         <!-- <h1 onclick="window.location.href='editprofile'" style="cursor:pointer;color:blue">Editar usuario</h1> -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3 py-5" style="text-align: justify !important;">
+        <!-- TODO -->
             @if ($idTipoUsuario != 1)
                 <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href='actos'">
                     <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
@@ -33,7 +34,7 @@ use App\Models\User;
                         <p>Pantalla de administración para la gestión de actos: altas, modificaciones y altas. Gestión de personas inscritas en los actos.</p>
                     </div>
                 </div>
-                <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href=''">
+                <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href='usuarios'">
                     <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
                         <use xlink:href="#person-gear"/>
                     </svg>
@@ -42,7 +43,7 @@ use App\Models\User;
                         <p>Creación, modificación y eliminación de nuevos usuarios que pueden acceder a la aplicación. Gestión de sus tipologías de usuario.</p>
                     </div>
                 </div>
-                <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href='{{ route('profile') }}'">
+                <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href='tipos-actos'">
                     <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
                         <use xlink:href="#db-gear"/>
                     </svg>
@@ -52,7 +53,7 @@ use App\Models\User;
                     </div>
                 </div>
             @endif
-            <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href=''">
+            <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href='calendario'">
                 <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
                     <use xlink:href="#calendar3"/>
                 </svg>

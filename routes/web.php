@@ -7,9 +7,11 @@ use App\Http\Controllers\TipoUController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\ActoController;
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use App\Models\Acto;
 use App\Models\TipoUsuario;
+use App\Models\TipoActo;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +48,6 @@ Route::get('/principal', function () {
     return view('principal', compact('idTipoUsuario', 'descripcionTipoUsuario', 'nombreUsuario'));
 })->name('principal');
 
-
 // Ruta de la página principal
 Route::get('/', function () {
     $user = null;
@@ -57,7 +58,6 @@ Route::get('/', function () {
     
     return view('index', compact('user'));
 });    
-
 
 // Rutas del login
 Route::get('/login', function () {
@@ -72,7 +72,6 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-
 // Rutas del signup
 Route::post('/signup', [SignupController::class, 'register'])->name('register');
 
@@ -81,7 +80,6 @@ Route::get('/signup', function () {
 })->name('signup');    
 
 // Ruta del perfil
-// Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
 // Ruta de la edición del perfil
@@ -90,22 +88,59 @@ Route::get('/editprofile', function () {
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
     $nombreUsuario = $user->Nombre;
-    
-
     return view('editprofile', compact('user', 'id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('editprofile');
 
 Route::post('/profile', [EditProfileController::class, 'update'])->name('profile.update');
-
 
 Route::get('/actos', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
     $nombreUsuario = $user->Nombre;
-    $actos = Acto::all();
+    $actos = ActoController::getLista();
     return view('actos', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('actos');
+
+Route::get('/actos-nuevo', function () {
+    $user = Auth::user();
+    $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
+    $idTipoUsuario = $user->Id_tipo_usuario;
+    $nombreUsuario = $user->Nombre;
+    $tiposActos = TipoActo::all();
+    $action = "insert";
+    $actionText = "Crear";
+    return view('actos-nuevo', compact('tiposActos','id_persona', 'idTipoUsuario', 'nombreUsuario', 'action', 'actionText'));
+})->name('actos-nuevo');
+
+Route::get('/actos-editar', [ActoController::class, 'edit']) ->name('actos-editar');
+
+Route::get('/usuarios', function () {
+    $user = Auth::user();
+    $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
+    $idTipoUsuario = $user->Id_tipo_usuario;
+    $nombreUsuario = $user->Nombre;
+    $personas = UserController::getLista();
+    return view('usuarios', compact('personas','id_persona', 'idTipoUsuario', 'nombreUsuario'));
+})->name('usuarios');
+
+Route::get('/tipos-actos', function () {
+    $user = Auth::user();
+    $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
+    $idTipoUsuario = $user->Id_tipo_usuario;
+    $nombreUsuario = $user->Nombre;
+    $tiposActos = TipoActo::all();
+    return view('tipos-actos', compact('tiposActos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
+})->name('tipos-actos');
+
+Route::get('/calendario', function () {
+    $user = Auth::user();
+    $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
+    $idTipoUsuario = $user->Id_tipo_usuario;
+    $nombreUsuario = $user->Nombre;
+    $actos = Acto::all();
+    return view('calendario', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
+})->name('calendario');
 
 
 

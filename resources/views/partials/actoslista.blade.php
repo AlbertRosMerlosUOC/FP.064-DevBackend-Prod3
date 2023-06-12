@@ -8,7 +8,7 @@
         <thead>
             <tr>
                 <td align="left" colspan="8"><h1 class="pb-2 border-bottom" style="text-align: left;">Gestión de actos</h1></td>
-                <td><a href="/views/admin/actosNuevo.php"><button class="btn btn-success"><i class="fa fa-plus fa-lg"></i>&nbsp;Crear acto</button></a></td>
+                <td><a href="actos-nuevo"><button class="btn btn-success"><i class="fa fa-plus fa-lg"></i>&nbsp;Crear acto</button></a></td>
             </tr>
         </thead>
         <thead style="background-color: #E9ECEF;">
@@ -16,12 +16,12 @@
                 <th scope="col" width="60px">#</th>
                 <th scope="col" width="110px">Fecha</th>
                 <th scope="col" width="80px">Hora</th>
-                <th scope="col" width="190px" style="text-align: left;">Tipo</th>
+                <th scope="col" width="180px" style="text-align: left;">Tipo</th>
                 <th scope="col" width="200px" style="text-align: left;">Titulo</th>
-                <th scope="col" width="320px" style="text-align: left;">Descripción</th>
+                <th scope="col" width="315px" style="text-align: left;">Descripción</th>
                 <th scope="col" width="110px">Nº asistentes</th>
                 <th scope="col" width="110px">Nº inscritos</th>
-                <th scope="col" width="*">Acciones</th>
+                <th scope="col" width="*" colspan="2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -33,17 +33,21 @@
                                 @if (count($actos) > 0)
                                     @foreach ($actos as $reg)
                                         <tr style="padding: 0px; margin: 0px;">
-                                            <td width="60px">{{ $reg["Id_acto"] }}</td>
-                                            <td width="110px">{{ date('d/m/Y', strtotime($reg['Fecha'])) }}</td>
-                                            <td width="80px">{{ $reg['Hora'] }}</td>
-                                            <td width="190px" align="left">{{ $reg['Tipo_acto'] }}</td>
-                                            <td width="200px" align="left">{{ $reg['Titulo'] }}</td>
-                                            <td width="320px" align="left">{{ $reg['Descripcion_corta'] }}</td>
-                                            <td width="110px">{{ $reg['Num_asistentes'] }}</td>
-                                            <td width="110px">{{ $reg['Num_inscritos'] }}</td>
-                                            <td width="*">
-                                                <button class="btn btn-primary" onclick="editarActo({{ $reg["Id_acto"] }})"><i class="fa fa-edit fa-lg"></i></button>
-                                                <button class="btn btn-danger" onclick="eliminarActo({{ $reg["Id_acto"] }})"><i class="fa fa-trash-o fa-lg"></i></button>
+                                            <td width="60px">{{ $reg->Id_acto }}</td>
+                                            <td width="110px">{{ date('d/m/Y', strtotime($reg->Fecha)) }}</td>
+                                            <td width="80px">{{ $reg->Hora }}</td>
+                                            <td width="180px" align="left">{{ $reg->Tipo_acto }}</td>
+                                            <td width="200px" align="left">{{ $reg->Titulo }}</td>
+                                            <td width="315px" align="left">{{ $reg->Descripcion_corta }}</td>
+                                            <td width="110px">{{ $reg->Num_asistentes }}</td>
+                                            <td width="110px">{{ $reg->Num_inscritos }}</td>
+                                            <td width="*" align="right" style="padding-right: 2px !important;">
+                                                <form action="{{ action('App\Http\Controllers\ActoController@edit') }}" method="GET">
+                                                    <input name="Id_acto" type="hidden" value="{{ $reg->Id_acto }}">
+                                                    <button class="btn btn-primary" type="submit" style="width: 40px !important; font-size: 13px !important;"><i class="fa fa-edit fa-lg"></i></button>
+                                                </form>
+                                            <td width="*" align="left" style="padding-left: 2px !important;">
+                                                <button class="btn btn-danger" style="width: 40px !important; font-size: 13px !important;" onclick="eliminarActo({{ $reg->Id_acto }})"><i class="fa fa-trash-o fa-lg"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach

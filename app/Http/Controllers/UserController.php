@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use DB;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use App\Models\User;
@@ -10,13 +11,23 @@
         public function getAll()
         {
             $users = User::all();
-            return view('users.index', compact('users'));
+            return view('users', compact('users'));
         }
 
         public function getById($id)
         {
             $user = User::find($id);
             return view('users.show', compact('user'));
+        }
+
+        public function getLista() {
+            $users = DB::select("
+                                 SELECT pe.id, pe.Nombre, pe.Apellido1, pe.Apellido2, pe.User, pe.Email, 
+                                        pe.Password, pe.Id_tipo_usuario, tu.Descripcion Tipo_usuario, pe.Anonimo 
+                                   FROM users pe 
+                                   JOIN tipos_usuarios tu ON tu.Id_tipo_usuario = pe.Id_tipo_usuario 
+                               ORDER BY Apellido1, Apellido2, Nombre, User");
+            return $users;
         }
 
         public function insert(Request $request)

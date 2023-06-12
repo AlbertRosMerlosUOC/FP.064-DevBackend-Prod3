@@ -12,18 +12,19 @@
 
             <div class="collapse navbar-collapse" id="navBar">
                 <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                    @if ($idTipoUsuario == 1)
+                    <!-- TODO -->
+                    @if ($idTipoUsuario != 1)
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="actos">Actos</a></li>
-                                <li><a class="dropdown-item" href="/views/usuarios.php">Usuarios</a></li>
-                                <li><a class="dropdown-item" href="/views/tipos-actos.php">Tipos de actos</a></li>
+                                <li><a class="dropdown-item" href="usuarios">Usuarios</a></li>
+                                <li><a class="dropdown-item" href="tipos-actos">Tipos de actos</a></li>
                             </ul>
                         </li>
                     @endif
                     <li class="nav-item">
-                        <a class="nav-link" href="/views/calendario.php">Calendario de actos</a>
+                        <a class="nav-link" href="calendario">Calendario de actos</a>
                     </li>
                 </ul>
             </div>

@@ -13,6 +13,7 @@
         use HasApiTokens, HasFactory, Notifiable;
 
         public $timestamps = true;
+        protected $primaryKey = 'id';
         /**
          * The attributes that are mass assignable.
          *

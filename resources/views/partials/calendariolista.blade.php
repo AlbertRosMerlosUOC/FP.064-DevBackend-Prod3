@@ -1,6 +1,7 @@
-<?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/calendarioListaLlenar.php';
-?>
+@php
+    use App\Models\Acto;
+    use App\Http\Controllers\ActoController;
+@endphp
 
 <div class="px-3 py-5" style="width: 100%; display: flex; justify-content: center; align-items: center;">
     <table class="table" style="width: 70%;">
@@ -13,17 +14,17 @@
                             <span style="padding-bottom: 5px;">Filtrar por:</span>
                             <div style="margin-left: 15px; display: flex !important; flex-wrap: nowrap !important;">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Filtro de fechas" style="margin-right: 15px;">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" <?php echo ($_GET['tDate'] == 1 ? 'checked="checked"' : ''); ?> onclick="showInput('1')">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="checked" onclick="showInput('1')">
                                     <label class="btn btn-outline-primary" for="btnradio1">Día</label>
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" <?php echo ($_GET['tDate'] == 2 ? 'checked="checked"' : ''); ?> onclick="showInput('2')">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onclick="showInput('2')">
                                     <label class="btn btn-outline-primary" for="btnradio2">Semana</label>
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" <?php echo ($_GET['tDate'] == 3 ? 'checked="checked"' : ''); ?> onclick="showInput('3')">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="showInput('3')">
                                     <label class="btn btn-outline-primary" for="btnradio3">Mes</label>
                                 </div>
-                                <input id="filtro1" name="filtro1" type="date"  class="form-control filtroFecha" style="font-size: 14px !important; display: <?php echo ($_GET['tDate'] == 1 ? 'block' : 'none'); ?>;" value="<?php echo ($_GET['tDate'] == 1 ? $_GET['fDate'] : ''); ?>"/>
-                                <input id="filtro2" name="filtro2" type="week"  class="form-control filtroFecha" style="font-size: 14px !important; display: <?php echo ($_GET['tDate'] == 2 ? 'block' : 'none'); ?>;" value="<?php echo ($_GET['tDate'] == 2 ? $_GET['fDate'] : ''); ?>">
-                                <input id="filtro3" name="filtro3" type="month" class="form-control filtroFecha" style="font-size: 14px !important; display: <?php echo ($_GET['tDate'] == 3 ? 'block' : 'none'); ?>;" value="<?php echo ($_GET['tDate'] == 3 ? $_GET['fDate'] : ''); ?>"/>
-                                <button class="btn btn-primary" onclick='buscarActos();' style="margin-left: 15px; height: 35px;"><i class="fa fa-search fa-1"></i></button>
+                                <input id="filtro1" name="filtro1" type="date" class="form-control filtroFecha" style="font-size: 14px !important; display: block;" value=""/>
+                                <input id="filtro2" name="filtro2" type="week" class="form-control filtroFecha" style="font-size: 14px !important; display: none;" value="">
+                                <input id="filtro3" name="filtro3" type="month" class="form-control filtroFecha" style="font-size: 14px !important; display: none;" value=""/>
+                                <button class="btn btn-primary" onclick="buscarActos();" style="margin-left: 15px; height: 35px;"><i class="fa fa-search fa-1"></i></button>
                             </div>
                         </div>
                     </h1>
@@ -49,9 +50,9 @@
                     <div class="div-listado" style="width: 100%;">
                         <table class="table table-hover" style="width: 100%;">
                             <tbody>
-                                <?php
-                                    if (count($actos) > 0) {
-                                        foreach ($actos as $reg) {
+                                @if (count($actos) > 0)
+                                    @foreach ($actos as $reg)
+                                        @php
                                             $fila = "<tr style=\"padding: 0px; margin: 0px;\" class=\"acto-rol" . $reg['Rol'] . "\">
                                                         <td width=\"60px\">". $reg["Id_acto"] . "</th>
                                                         <td width=\"110px\">". date('d/m/Y', strtotime($reg['Fecha'])) . "</td>
@@ -88,13 +89,13 @@
                                                     </tr>";
                                                     
                                             echo $fila;
-                                        }
-                                    } else {
-                                        echo "<tr>
-                                                <td colspan='9'>No existen actos creados</td>
-                                            </tr>";
-                                    }
-                                ?>
+                                        @endphp
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan='9'>No existen actos creados</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -103,7 +104,6 @@
         </tbody>
     </table>
 </div>
-
 <div class="modal fade" id="modalInformacion" tabindex="1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -127,11 +127,12 @@
             <div class="modal-body">
                 <p id="inscribirActoText"></p>
                 <form action="/php/actosFormAccion.php" method="POST">
+                    @csrf
                     <input type="hidden" id="Id_acto" name="Id_acto" value=""/>
-                    <input type="hidden" id="Id_persona" name="Id_persona" value="<?php echo $id_persona; ?>"/>
+                    <input type="hidden" id="Id_persona" name="Id_persona" value="{{ $id_persona }}"/>
                     <input type="hidden" id="Tipo_accion" name="Tipo_accion" value=""/>
                     <button type="button" class="btn btn-primary" id="cancelInscribir">Cancelar</button>
-                    <button type="button" class="btn" id="inscribirActoButton" name ="inscribirActo" onclick="goAccion();"></button>
+                    <button type="button" class="btn" id="inscribirActoButton" name="inscribirActo" onclick="goAccion();"></button>
                 </form>
             </div>
         </div>
@@ -166,127 +167,121 @@
     </div>
 </div>
 
-<script>
-    function showInput(inputId) {
-        var elementos = document.querySelectorAll(".filtroFecha");
-        for (var i = 0; i < elementos.length; i++) {
-            elementos[i].style.display = "none";
+@push('scripts')
+    <script>
+        function showInput(inputId) {
+            var elementos = document.querySelectorAll(".filtroFecha");
+            for (var i = 0; i < elementos.length; i++) {
+                elementos[i].style.display = "none";
+            }
+            var input = document.getElementById('filtro' + inputId);
+            input.style.display = "block";
         }
-        var input = document.getElementById('filtro' + inputId);
-        input.style.display = "block";
-    }
 
-    function buscarActos() {
-        var tDate = 0;
-        var fDate = "";
-        var elementos = document.querySelectorAll(".filtroFecha");
-        for (var i = 0; i < elementos.length; i++) {
-            if (elementos[i].style.display == "block") {
-                if (document.getElementById('filtro' + (i+1)).value != "") {
-                    tDate = i + 1;
-                    fDate = document.getElementById('filtro' + (i+1)).value;
+        function buscarActos() {
+            var tDate = 0;
+            var fDate = "";
+            var elementos = document.querySelectorAll(".filtroFecha");
+            for (var i = 0; i < elementos.length; i++) {
+                if (elementos[i].style.display == "block") {
+                    if (document.getElementById('filtro' + (i + 1)).value != "") {
+                        tDate = i + 1;
+                        fDate = document.getElementById('filtro' + (i + 1)).value;
+                    }
                 }
             }
-        }
-        if (tDate > 0) {
-            var url = "/views/calendario.php?a=get&tDate=" + tDate + "&fDate=" + fDate;
-            window.location.href = url;
-        } else {
-            return;
-        }
-    }
-
-    function inscribir(tipo, id) {
-        document.getElementById('Tipo_accion').value = tipo;
-        document.getElementById('Id_acto').value = id;
-        var botonAccion = document.getElementById("inscribirActoButton");
-        if (tipo == 'A') {
-            document.getElementById("inscribirActoTitulo").innerHTML = "Inscripción en acto";
-            document.getElementById("inscribirActoText").innerHTML = "¿Te quieres inscribir en este acto?";
-            botonAccion.classList.remove("btn-danger");
-            botonAccion.classList.add("btn-success");
-            botonAccion.innerHTML = "Inscribirme";
-        } else {
-            document.getElementById("inscribirActoTitulo").innerHTML = "Desinscripción de acto";
-            document.getElementById("inscribirActoText").innerHTML = "¿Te quieres desinscribir de este acto?";
-            botonAccion.classList.remove("btn-success");
-            botonAccion.classList.add("btn-danger");
-            botonAccion.innerHTML = "Desinscribirme";
-        }
-        const modal = new bootstrap.Modal(document.getElementById('modalInscribir'), {
-            keyboard: false
-        });
-        const cancelarBtn = document.getElementById('cancelInscribir');
-        cancelarBtn.addEventListener('click', () => {
-            modal.hide();
-        });
-        modal.show();
-    }
-
-    function goAccion() {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status == 200) {
-                    location.reload(true);
-                } else {
-                    alert("Error al obtener los datos");
-                }
+            if (tDate > 0) {
+                var url = "/views/calendario.php?a=get&tDate=" + tDate + "&fDate=" + fDate;
+                window.location.href = url;
+            } else {
+                return;
             }
-        };
-        xhr.open("GET", "/php/calendarioFormAccion.php?id_acto=" + document.getElementById('Id_acto').value + 
-                                                     "&id_persona=" + document.getElementById('Id_persona').value + 
-                                                     "&accion=" + document.getElementById('Tipo_accion').value, true);
-        xhr.send();
-    }
+        }
 
-    function getInfo(id) {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status == 200) {
-                    document.getElementById("informacion-body").innerHTML = xhr.responseText;
-                    const modal = new bootstrap.Modal(document.getElementById('modalInformacion'), {
-                        keyboard: false
-                    });
-                    modal.show();
-                } else {
-                    alert("Error al obtener los datos");
-                }
+        function inscribir(tipo, id) {
+            document.getElementById('Tipo_accion').value = tipo;
+            document.getElementById('Id_acto').value = id;
+            var botonAccion = document.getElementById("inscribirActoButton");
+            if (tipo == 'A') {
+                document.getElementById("inscribirActoTitulo").innerHTML = "Inscripción en acto";
+                document.getElementById("inscribirActoText").innerHTML = "¿Te quieres inscribir en este acto?";
+                botonAccion.classList.remove("btn-danger");
+                botonAccion.classList.add("btn-success");
+                botonAccion.innerHTML = "Inscribirme";
+            } else {
+                document.getElementById("inscribirActoTitulo").innerHTML = "Desinscripción de acto";
+                document.getElementById("inscribirActoText").innerHTML = "¿Te quieres desinscribir de este acto?";
+                botonAccion.classList.remove("btn-success");
+                botonAccion.classList.add("btn-danger");
+                botonAccion.innerHTML = "Desinscribirme";
             }
-        };
-        xhr.open("GET", "/php/calendarioInformacion.php?id=" + id, true);
-        xhr.send();
-    }
+            const modal = new bootstrap.Modal(document.getElementById('modalInscribir'), {
+                keyboard: false
+            });
+            const cancelarBtn = document.getElementById('cancelInscribir');
+            cancelarBtn.addEventListener('click', () => {
+                modal.hide();
+            });
+            modal.show();
+        }
 
-    function getInscritos(id) {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status == 200) {
-                    document.getElementById("inscritos-body").innerHTML = xhr.responseText;
-                    const modal = new bootstrap.Modal(document.getElementById('modalInscritos'), {
-                        keyboard: false
-                    });
-                    modal.show();
-                } else {
-                    alert("Error al obtener los datos");
+        function goAccion() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        location.reload(true);
+                    } else {
+                        alert("Error al obtener los datos");
+                    }
                 }
-            }
-        };
-        xhr.open("GET", "/php/calendarioInscritos.php?id=" + id, true);
-        xhr.send();
-    }
-</script>
+            };
+            xhr.open("GET", "/php/calendarioFormAccion.php?id_acto=" + document.getElementById('Id_acto').value +
+                "&id_persona=" + document.getElementById('Id_persona').value +
+                "&accion=" + document.getElementById('Tipo_accion').value, true);
+            xhr.send();
+        }
 
-<?php
-    if (!$_GET['tDate']) {
-        echo '<script>
-                document.getElementById("btnradio1").checked = "checked";
-                document.getElementById("filtro1").style.display = "block";
-              </script>';
-    }
+        function getInfo(id) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        document.getElementById("informacion-body").innerHTML = xhr.responseText;
+                        const modal = new bootstrap.Modal(document.getElementById('modalInformacion'), {
+                            keyboard: false
+                        });
+                        modal.show();
+                    } else {
+                        alert("Error al obtener los datos");
+                    }
+                }
+            };
+            xhr.open("GET", "/php/calendarioInformacion.php?id=" + id, true);
+            xhr.send();
+        }
 
+        function getInscritos(id) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        document.getElementById("inscritos-body").innerHTML = xhr.responseText;
+                        const modal = new bootstrap.Modal(document.getElementById('modalInscritos'), {
+                            keyboard: false
+                        });
+                        modal.show();
+                    } else {
+                        alert("Error al obtener los datos");
+                    }
+                }
+            };
+            xhr.open("GET", "/php/calendarioInscritos.php?id=" + id, true);
+            xhr.send();
+        }
+    </script>
+
+    <?php
     $estadoAccion = $_SESSION['estadoAccion'] ?? null;
     $tipoAccion = $_SESSION['tipoAccion'] ?? null;
     if ($estadoAccion) {
@@ -303,13 +298,13 @@
             $texto = ($tipoAccion == 'A' ? 'Ha habido un error al inscribirte al acto.' : 'Ha habido un error al desinscribirte del acto.');
         }
         echo '<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-                <div id="liveToast" class="toast '.$class.'" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+                <div id="liveToast" class="toast ' . $class . '" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
                     <div class="toast-header">
-                        <i class="fa '.($estadoAccion == 'ok' ? 'fa-check-circle' : 'fa-times-circle').'" aria-hidden="true"></i>&nbsp;<strong class="me-auto">'.$mensaje.'</strong>
+                        <i class="fa ' . ($estadoAccion == 'ok' ? 'fa-check-circle' : 'fa-times-circle') . '" aria-hidden="true"></i>&nbsp;<strong class="me-auto">' . $mensaje . '</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                     <div class="toast-body">
-                        '. $texto .'
+                        ' . $texto . '
                     </div>
                 </div>
             </div>';
@@ -324,4 +319,5 @@
         unset($_SESSION['estadoAccion']);
         unset($_SESSION['tipoAccion']);
     }
-?>
+    ?>
+
