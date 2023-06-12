@@ -12,8 +12,7 @@
 
             <div class="collapse navbar-collapse" id="navBar">
                 <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                    <!-- TODO -->
-                    @if ($idTipoUsuario != 1)
+                    @if ($idTipoUsuario == 1)
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
                             <ul class="dropdown-menu">

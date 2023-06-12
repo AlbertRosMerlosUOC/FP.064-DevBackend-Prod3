@@ -21,10 +21,8 @@ use App\Models\User;
     @include('partials.svg')
     <div class="container px-3 py-5" id="icon-grid">
         <h1 class="pb-2 border-bottom" style="text-align: left;">Menú principal de <b>{{$descripcionTipoUsuario}}</b></h1>
-        <!-- <h1 onclick="window.location.href='editprofile'" style="cursor:pointer;color:blue">Editar usuario</h1> -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3 py-5" style="text-align: justify !important;">
-        <!-- TODO -->
-            @if ($idTipoUsuario != 1)
+            @if ($idTipoUsuario == 1)
                 <div class="col d-flex align-items-start tarjeta-menu" onclick="window.location.href='actos'">
                     <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em">
                         <use xlink:href="#calendar-plus"/>

@@ -44,6 +44,18 @@
             return $actos;
         }
 
+        public function getListaCalendarioInvitado() {
+            $actos = DB::select("
+                                 SELECT ac.Id_acto, ac.Fecha, TIME_FORMAT(ac.Hora, '%H:%i') Hora, ac.Titulo, ac.Descripcion_corta, ac.Descripcion_larga, 
+                                        ac.Num_asistentes, ac.Id_tipo_acto, (SELECT COUNT(*) FROM personas_actos pa WHERE pa.Id_acto = ac.Id_acto AND pa.Ponente = 0 ) Num_inscritos, 
+                                        (SELECT pa.Ponente FROM personas_actos pa WHERE pa.Id_persona = 0 AND pa.Id_acto = ac.Id_acto) Rol,
+                                        ta.Descripcion Tipo_acto 
+                                FROM actos ac 
+                                JOIN tipo_acto ta ON ta.Id_tipo_acto = ac.Id_tipo_acto
+                            ORDER BY ac.Fecha DESC , ac.Hora DESC");
+            return $actos;
+        }
+
         public function edit(Request $request)
         {
             $user = Auth::user();
@@ -88,7 +100,6 @@
         ]);
 
             $acto = new Acto();
-            // TODO
             $acto->Fecha = $request->input('Fecha');
             $acto->Hora = $request->input('Hora');
             $acto->Titulo = $request->input('Titulo');
