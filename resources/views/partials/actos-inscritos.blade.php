@@ -51,7 +51,7 @@
             </div>
             <div class="modal-body">
                 <p>¿Estás seguro que quieres desinscribir del acto a este usuario?</p>
-                <form action="{{ url('/php/actosFormAccion.php') }}" method="POST">
+                <form action="{{ route('actos.deleteInscription', $acto->Id_acto) }}" method="POST">
                     @csrf
                     <input type="hidden" name="Id_acto" value="{{ $acto->Id_acto }}"/>
                     <input type="hidden" id="Id_persona_inscrita" name="Id_persona" value=""/>

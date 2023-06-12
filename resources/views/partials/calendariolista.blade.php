@@ -53,36 +53,36 @@
                                 @if (count($actos) > 0)
                                     @foreach ($actos as $reg)
                                         @php
-                                            $fila = "<tr style=\"padding: 0px; margin: 0px;\" class=\"acto-rol" . $reg['Rol'] . "\">
-                                                        <td width=\"60px\">". $reg["Id_acto"] . "</th>
-                                                        <td width=\"110px\">". date('d/m/Y', strtotime($reg['Fecha'])) . "</td>
-                                                        <td width=\"80px\">". $reg['Hora'] . "</td>
-                                                        <td width=\"190px\" align='left'>". $reg['Tipo_acto'] . "</td>
-                                                        <td width=\"190px\" align='left'>". $reg['Titulo'] . "</td>
-                                                        <td width=\"300px\" align='left'>". $reg['Descripcion_corta'] . "</td>
-                                                        <td width=\"110px\">". $reg['Num_asistentes'] . "</td>
-                                                        <td width=\"110px\">". $reg['Num_inscritos'] . "</td>
+                                            $fila = "<tr style=\"padding: 0px; margin: 0px;\" class=\"acto-rol" . $reg->Rol . "\">
+                                                        <td width=\"60px\">". $reg->Id_acto . "</th>
+                                                        <td width=\"110px\">". date('d/m/Y', strtotime($reg->Fecha)) . "</td>
+                                                        <td width=\"80px\">". $reg->Hora . "</td>
+                                                        <td width=\"190px\" align='left'>". $reg->Tipo_acto . "</td>
+                                                        <td width=\"190px\" align='left'>". $reg->Titulo . "</td>
+                                                        <td width=\"300px\" align='left'>". $reg->Descripcion_corta . "</td>
+                                                        <td width=\"110px\">". $reg->Num_asistentes . "</td>
+                                                        <td width=\"110px\">". $reg->Num_inscritos . "</td>
                                                         <td width=\"*\" class=\"tdBtnAcciones\">
-                                                            <button class=\"btn btn-info\" onclick='getInfo(" . $reg["Id_acto"] . ")'><i class=\"fa fa-info-circle fa-1\"></i></button>";
+                                                            <button class=\"btn btn-info\" onclick='getInfo(" . $reg->Id_acto . ")'><i class=\"fa fa-info-circle fa-1\"></i></button>";
 
-                                            if ($reg['Rol'] == '0' || $reg['Rol'] == '1') {
-                                                if ($reg['Rol'] == '0') {
-                                                    $fila .= "&nbsp;<button class=\"btn btn-danger\" onclick='inscribir(\"B\", " . $reg["Id_acto"] . ")'><i class=\"fa fa-user-times fa-1\"></i></button>";
+                                            if ($reg->Rol == '0' || $reg->Rol == '1') {
+                                                if ($reg->Rol == '0') {
+                                                    $fila .= "&nbsp;<button class=\"btn btn-danger\" onclick='inscribir(\"B\", " . $reg->Id_acto . ")'><i class=\"fa fa-user-times fa-1\"></i></button>";
                                                 } else {
                                                     $fila .= "&nbsp;<button class=\"btn btn-secondary\" onclick='return;'><i class=\"fa fa-user-times fa-1\"></i></button>";
                                                 }
                                             } else {
-                                                if ($reg['Num_asistentes'] == $reg['Num_inscritos']) {
+                                                if ($reg->Num_asistentes == $reg->Num_inscritos) {
                                                     $fila .= "&nbsp;<button class=\"btn btn-secondary\" onclick='return;'><i class=\"fa fa-user-plus fa-1\"></i></button>";
                                                 } else {
-                                                    $fila .= "&nbsp;<button class=\"btn btn-success\" onclick='inscribir(\"A\", " . $reg["Id_acto"] . ")'><i class=\"fa fa-user-plus fa-1\"></i></button>";
+                                                    $fila .= "&nbsp;<button class=\"btn btn-success\" onclick='inscribir(\"A\", " . $reg->Id_acto . ")'><i class=\"fa fa-user-plus fa-1\"></i></button>";
                                                 }
                                             }
 
-                                            if ($reg['Num_inscritos'] == '0') {
+                                            if ($reg->Num_inscritos == '0') {
                                                 $fila .= "&nbsp;<button class=\"btn btn-secondary\" onclick='return;'><i class=\"fa fa-users fa-2\"></i></button>";
                                             } else {
-                                                $fila .= "&nbsp;<button class=\"btn btn-warning\" onclick='getInscritos(" . $reg["Id_acto"] . ");'><i class=\"fa fa-users fa-2\"></i></button>";
+                                                $fila .= "&nbsp;<button class=\"btn btn-warning\" onclick='getInscritos(" . $reg->Id_acto . ");'><i class=\"fa fa-users fa-2\"></i></button>";
                                             }
 
                                             $fila .=    "</td>

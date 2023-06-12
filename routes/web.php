@@ -10,6 +10,7 @@ use App\Http\Controllers\ActoController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use App\Models\Acto;
+use App\Models\PersonaActo;
 use App\Models\TipoUsuario;
 use App\Models\TipoActo;
 
@@ -23,11 +24,6 @@ use App\Models\TipoActo;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 
 // Ruta de la página principal
 Route::get('/principal', function () {
@@ -93,7 +89,6 @@ Route::get('/editprofile', function () {
 
 Route::post('/profile', [EditProfileController::class, 'update'])->name('profile.update');
 
-
 // Obtener la lista de tipos de acto
 Route::get('/actos', function () {
     $user = Auth::user();
@@ -103,7 +98,6 @@ Route::get('/actos', function () {
     $actos = ActoController::getLista();
     return view('actos', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('actos');
-
 
 // Ruta para crear un nuevo acto
 Route::get('/actos-nuevo', function () {
@@ -124,16 +118,12 @@ Route::post('/actos-nuevo',  [ActoController::class, 'insert'])->name('actos.ins
 // Ruta para eliminar un acto
 Route::delete('/actos/{id}', [ActoController::class, 'delete'])->name('actos.delete');
 
-
 // Ruta para editar un acto
 Route::get('/actos-editar', [ActoController::class, 'edit']) ->name('actos-editar');
 
 Route::post('/actos', [ActoController::class, 'update'])->name('actos.update');
 
-
-
-
-
+Route::post('/actos/deleteInscription/{id}', [ActoController::class, 'deleteInscription'])->name('actos.deleteInscription');
 
 Route::get('/usuarios', function () {
     $user = Auth::user();
@@ -158,7 +148,7 @@ Route::get('/calendario', function () {
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
     $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
-    $actos = Acto::all();
+    $actos = ActoController::getListaCalendario($id_persona);
     return view('calendario', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('calendario');
 

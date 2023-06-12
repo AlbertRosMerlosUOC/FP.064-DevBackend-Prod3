@@ -6,6 +6,7 @@
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use App\Models\Acto;
+    use App\Models\PersonaActo;
     use App\Models\TipoActo;
 
     class ActoController extends Controller {
@@ -28,6 +29,18 @@
                                 FROM actos ac 
                                 JOIN tipo_acto ta ON ta.Id_tipo_acto = ac.Id_tipo_acto
                             ORDER BY ac.Fecha DESC, ac.Hora DESC");
+            return $actos;
+        }
+
+        public function getListaCalendario($id) {
+            $actos = DB::select("
+                                 SELECT ac.Id_acto, ac.Fecha, TIME_FORMAT(ac.Hora, '%H:%i') Hora, ac.Titulo, ac.Descripcion_corta, ac.Descripcion_larga, 
+                                        ac.Num_asistentes, ac.Id_tipo_acto, (SELECT COUNT(*) FROM personas_actos pa WHERE pa.Id_acto = ac.Id_acto AND pa.Ponente = 0 ) Num_inscritos, 
+                                        (SELECT pa.Ponente FROM personas_actos pa WHERE pa.Id_persona = $id AND pa.Id_acto = ac.Id_acto) Rol,
+                                        ta.Descripcion Tipo_acto 
+                                FROM actos ac 
+                                JOIN tipo_acto ta ON ta.Id_tipo_acto = ac.Id_tipo_acto
+                            ORDER BY ac.Fecha DESC , ac.Hora DESC");
             return $actos;
         }
 
@@ -117,12 +130,20 @@
         }
         
 
-        public function delete($id)
-        {
+        public function delete($id) {
             $acto = Acto::find($id);
             $acto->delete();
 
             return redirect()->route('actos');
+        }
+
+        public function deleteInscription($id) {
+            $idActo = request('Id_acto');
+            $idPersona = request('Id_persona');
+
+            PersonaActo::where('Id_acto', $idActo)->where('Id_persona', $idPersona)->delete();
+
+            return redirect()->back()->with('success', 'Inscripción eliminada correctamente');
         }
 
         // public function index()
