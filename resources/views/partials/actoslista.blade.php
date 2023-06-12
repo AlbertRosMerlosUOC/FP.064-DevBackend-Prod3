@@ -91,11 +91,10 @@
 </div>
 
 <script>
-    function editarActo(id) {
-        var url = "/views/admin/actosEditar.php?id=" + id;
-        window.location.href = url;
-    }
-
+    // function editarActo(id) {
+    //     var url = "/views/admin/actosEditar.php?id=" + id;
+    //     window.location.href = url;
+    // }
     function eliminarActo(id) {
         document.getElementById('Id_acto').value = id;
         const modal = new bootstrap.Modal(document.getElementById('modalActoDelete'), {
@@ -108,6 +107,23 @@
         modal.show();
     }
 </script>
+
+
+<?php
+     function create()
+    {
+        $action = 'insert'; // Indicar acción de creación
+        return view('actos-form', compact('action'));
+    }
+
+     function update($id)
+    {
+        $action = 'update'; // Indicar acción de actualización
+        $acto = Acto::find($id);
+        return view('actos-form', compact('action', 'acto', 'id'));
+    }
+?>
+
 
 @php
     $estadoAccion = session('estadoAccion');
@@ -143,3 +159,4 @@
         session()->forget('estadoAccion');
     }
 @endphp
+

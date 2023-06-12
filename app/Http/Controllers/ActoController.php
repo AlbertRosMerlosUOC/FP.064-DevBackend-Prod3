@@ -89,17 +89,33 @@
             return redirect()->route('actos');
         }
 
-        public function update(Request $request, $id)
+        public function update(Request $request)
         {
-            $acto = Acto::find($id);
-            // TODO
-            $acto->name = $request->input('name');
-            $acto->email = $request->input('email');
-            $acto->password = bcrypt($request->input('password'));
+            // Validar los datos del formulario
+            $validatedData = $request->validate([
+                'Fecha' => 'required',
+                'Hora' => 'required',
+                'Titulo' => 'required',
+                'Descripcion_corta' => 'required',
+                'Descripcion_larga' => 'required',
+                'Num_asistentes' => 'required',
+                'Id_tipo_acto' => 'required',
+            ]);
+        
+            $acto = Acto::find($request->Id_acto);
+            $acto->Fecha = $request->input('Fecha');
+            $acto->Hora = $request->input('Hora');
+            $acto->Titulo = $request->input('Titulo');
+            $acto->Descripcion_corta = $request->input('Descripcion_corta');
+            $acto->Descripcion_larga = $request->input('Descripcion_larga');
+            $acto->Num_asistentes = $request->input('Num_asistentes');
+            $acto->Id_tipo_acto = $request->input('Id_tipo_acto');
+        
             $acto->save();
-
-            return redirect()->route('actos.show', $id);
+        
+            return redirect()->route('actos', $request->Id_acto);
         }
+        
 
         public function delete($id)
         {
