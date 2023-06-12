@@ -36,7 +36,7 @@
             $user = Auth::user();
             $id_persona = $user->id;
             $idTipoUsuario = $user->Id_tipo_usuario;
-            $nombreUsuario = $user->Nombre;
+            $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
             $tiposActos = TipoActo::all();
             $action = 'update';
             $actionText = 'Guardar';

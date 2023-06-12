@@ -37,7 +37,7 @@ Route::get('/principal', function () {
         $userId = Auth::id();
         $user = User::find($userId);
         $idTipoUsuario = $user->Id_tipo_usuario;
-        $nombreUsuario = $user->Nombre;
+        $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
     }    
     if ($idTipoUsuario) {
         $tipoUsuario = TipoUsuario::find($idTipoUsuario);
@@ -87,7 +87,7 @@ Route::get('/editprofile', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
-    $nombreUsuario = $user->Nombre;
+    $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
     return view('editprofile', compact('user', 'id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('editprofile');
 
@@ -99,7 +99,7 @@ Route::get('/actos', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
-    $nombreUsuario = $user->Nombre;
+    $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
     $actos = ActoController::getLista();
     return view('actos', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('actos');
@@ -110,7 +110,7 @@ Route::get('/actos-nuevo', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
-    $nombreUsuario = $user->Nombre;
+    $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
     $tiposActos = TipoActo::all();
     $action = "insert";
     $actionText = "Crear";
@@ -134,7 +134,7 @@ Route::get('/usuarios', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
-    $nombreUsuario = $user->Nombre;
+    $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
     $personas = UserController::getLista();
     return view('usuarios', compact('personas','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('usuarios');
@@ -143,7 +143,7 @@ Route::get('/tipos-actos', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
-    $nombreUsuario = $user->Nombre;
+    $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
     $tiposActos = TipoActo::all();
     return view('tipos-actos', compact('tiposActos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('tipos-actos');
@@ -152,7 +152,7 @@ Route::get('/calendario', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
     $idTipoUsuario = $user->Id_tipo_usuario;
-    $nombreUsuario = $user->Nombre;
+    $nombreUsuario = $user->Nombre . ' ' . $user->Apellido1 . ' ' . $user->Apellido2;
     $actos = Acto::all();
     return view('calendario', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('calendario');
