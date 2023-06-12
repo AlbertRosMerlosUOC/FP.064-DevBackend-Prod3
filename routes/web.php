@@ -119,14 +119,19 @@ Route::get('/actos-nuevo', function () {
 
 Route::post('/actos', [ActoController::class, 'insert'])->name('actos.insert');
 
+Route::post('/actos-nuevo',  [ActoController::class, 'insert'])->name('actos.insert');
 
 // Ruta para eliminar un acto
 Route::delete('/actos/{id}', [ActoController::class, 'delete'])->name('actos.delete');
 
 
-
-
+// Ruta para editar un acto
 Route::get('/actos-editar', [ActoController::class, 'edit']) ->name('actos-editar');
+
+Route::post('/actos', [ActoController::class, 'update'])->name('actos.update');
+
+
+
 
 
 
