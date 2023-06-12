@@ -63,6 +63,17 @@
      
         public function insert(Request $request)
         {
+            // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'Fecha' => 'required',
+            'Hora' => 'required',
+            'Titulo' => 'required',
+            'Descripcion_corta' => 'required',
+            'Descripcion_larga' => 'required',
+            'Num_asistentes' => 'required',
+            'Id_tipo_acto' => 'required',
+        ]);
+
             $acto = new Acto();
             // TODO
             $acto->Fecha = $request->input('Fecha');
@@ -72,9 +83,10 @@
             $acto->Descripcion_larga = $request->input('Descripcion_larga');
             $acto->Num_asistentes = $request->input('Num_asistentes');
             $acto->Id_tipo_acto = $request->input('Id_tipo_acto');
+
             $acto->save();
 
-            return redirect()->route('actos.index');
+            return redirect()->route('actos');
         }
 
         public function update(Request $request, $id)
@@ -94,7 +106,7 @@
             $acto = Acto::find($id);
             $acto->delete();
 
-            return redirect()->route('actos.index');
+            return redirect()->route('actos');
         }
 
         // public function index()

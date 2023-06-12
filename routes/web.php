@@ -93,6 +93,8 @@ Route::get('/editprofile', function () {
 
 Route::post('/profile', [EditProfileController::class, 'update'])->name('profile.update');
 
+
+// Obtener la lista de tipos de acto
 Route::get('/actos', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
@@ -102,6 +104,8 @@ Route::get('/actos', function () {
     return view('actos', compact('actos','id_persona', 'idTipoUsuario', 'nombreUsuario'));
 })->name('actos');
 
+
+// Ruta para crear un nuevo acto
 Route::get('/actos-nuevo', function () {
     $user = Auth::user();
     $id_persona = $user->id; // Obtén el ID de la persona asociado al usuario autenticado
@@ -113,7 +117,18 @@ Route::get('/actos-nuevo', function () {
     return view('actos-nuevo', compact('tiposActos','id_persona', 'idTipoUsuario', 'nombreUsuario', 'action', 'actionText'));
 })->name('actos-nuevo');
 
+Route::post('/actos', [ActoController::class, 'insert'])->name('actos.insert');
+
+
+// Ruta para eliminar un acto
+Route::delete('/actos/{id}', [ActoController::class, 'delete'])->name('actos.delete');
+
+
+
+
 Route::get('/actos-editar', [ActoController::class, 'edit']) ->name('actos-editar');
+
+
 
 Route::get('/usuarios', function () {
     $user = Auth::user();

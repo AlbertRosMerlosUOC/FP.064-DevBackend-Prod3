@@ -1,5 +1,5 @@
 <div class="tab-pane show active" id="datos" role="tabpanel" aria-labelledby="datos-tab">
-    <form action="{{ url('/php/actosFormAccion.php') }}" method="POST" style="width: 450px;">
+    <form action="{{ route('actos.insert') }}" method="POST" style="width: 450px;">
         @csrf
         <input type="hidden" id="Id_acto" name="Id_acto"/>
         <div class="form-group">

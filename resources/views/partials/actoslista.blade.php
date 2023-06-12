@@ -46,8 +46,14 @@
                                                     <input name="Id_acto" type="hidden" value="{{ $reg->Id_acto }}">
                                                     <button class="btn btn-primary" type="submit" style="width: 40px !important; font-size: 13px !important;"><i class="fa fa-edit fa-lg"></i></button>
                                                 </form>
-                                            <td width="*" align="left" style="padding-left: 2px !important;">
-                                                <button class="btn btn-danger" style="width: 40px !important; font-size: 13px !important;" onclick="eliminarActo({{ $reg->Id_acto }})"><i class="fa fa-trash-o fa-lg"></i></button>
+                                                <td width="*" align="left" style="padding-left: 2px !important;">
+                                                <form action="{{ route('actos.delete', $reg->Id_acto) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" style="width: 40px !important; font-size: 13px !important;" onclick="return confirm('¿Estás seguro que quieres borrar este acto y todos sus participantes y ponentes asociados?')">
+                                                        <i class="fa fa-trash-o fa-lg"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
